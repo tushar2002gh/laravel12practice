@@ -1,0 +1,58 @@
+This experimental model uses your Search history. Some features aren't available.
+Here are simple notes on routing in Laravel 12:
+
+What is Routing?
+
+Routing connects URLs (web addresses) to specific parts of your application's code (usually controllers or simple functions).
+It tells Laravel what to do when a user visits a certain URL.
+Key Concepts:
+
+Routes are defined in routes/web.php (for web requests) and routes/api.php (for API requests).
+Basic Syntax: Route::http_verb('uri', 'Action');
+http_verb: GET, POST, PUT, DELETE, PATCH, OPTIONS. These indicate the type of request.
+uri: The URL path (e.g., /, /users, /products/{id}).
+Action: What happens when the URL is matched. Can be:
+A Closure (an anonymous function directly in the route).
+A Controller method (e.g., [UserController::class, 'index']).
+Common HTTP Verbs:
+GET: Used to retrieve data (displaying pages).
+POST: Used to submit data (forms).
+PUT/PATCH: Used to update existing data.
+DELETE: Used to remove data.
+Route Parameters: Use {} in the URI to capture dynamic parts of the URL.
+Example: Route::get('/users/{id}', function ($id) { ... });
+Named Routes: Give routes names using ->name('route.name'). Useful for generating URLs in your code.
+Example: Route::get('/profile', [UserController::class, 'show'])->name('profile');
+Generate URLs: route('profile').
+Route Groups: Organize routes with shared attributes (like prefixes or middleware).
+Example (with prefix):
+PHP
+
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', function () { ... });
+});
+Simple Examples:
+
+PHP
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+
+// Route for the homepage
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Route to display a user with a specific ID
+Route::get('/users/{id}', function ($id) {
+    return 'User ID: ' . $id;
+});
+
+// Route to a controller method
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+// Route for submitting a form
+Route::post('/submit', function () {
+    // Handle form submission
+});
+These notes cover the fundamental aspects of routing in Laravel 12. Remember to check the official documentation for more advanced features!
